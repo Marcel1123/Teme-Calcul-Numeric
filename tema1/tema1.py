@@ -1,3 +1,7 @@
+import math
+import random
+import numpy
+
 def problema1():
 	precizie = 1
 	while True:
@@ -23,6 +27,10 @@ def most_appropriate_power_of_two(number):
 		return pow(2, num_len - 1)
 
 
+def generate_boolean_matrix(dimension):
+	return numpy.array([[random.choice([True, False]) for i in range(0, dimension)] for j in range(0, dimension)], dtype=bool)
+
+
 def generate_number(number):
 	start = 0
 	if number <= 4:
@@ -39,4 +47,44 @@ def generate_number(number):
 			start = start * 2
 
 
-print(generate_number(12))
+def matrix_A_decomposition(initial_matrix, m, p):
+	result = []
+	start = 0
+	end = m
+	for i in range(0, p):
+		aux = [i[start:end] for i in initial_matrix]
+		start = start + m
+		end = end + m
+		result.append(aux)
+	return numpy.array(result)
+
+
+def matrix_B_decomposition(initial_matrix, m, p):
+	result = []
+	start = 0
+	end = m
+	for i in range(0, p):
+		aux = initial_matrix[start:end]
+		start = start + m
+		end = end + m
+		result.append(aux)
+	return numpy.array(result)
+
+
+def problema3(start):
+	number = generate_number(start)
+
+	matrix_A = generate_boolean_matrix(number)
+	matrix_B = generate_boolean_matrix(number)
+
+	m = math.floor(math.log2(number))
+	p = math.ceil(number / m)
+
+	list_of_matric_from_A = matrix_A_decomposition(matrix_A, m, p)
+	list_of_matric_from_B = matrix_B_decomposition(matrix_B, m, p)
+
+	print(list_of_matric_from_A)
+	print(list_of_matric_from_B)
+
+
+print(problema3(4))

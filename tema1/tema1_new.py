@@ -15,7 +15,7 @@ def problema1():
 
 def problema2():
 	precizie = problema1()
-	if (1.0 + pow(10, -precizie)) + pow(10, -precizie) != 1.0 +  ( pow(10, -precizie) + pow(10, -precizie) ):
+	if (1.0 + pow(10, -precizie)) + pow(10, -precizie) != 1.0 + (pow(10, -precizie) + pow(10, -precizie)):
 		return True
 	else:
 		return False
@@ -63,7 +63,7 @@ def generate_all_combination(num):
 	for i in range(0, pow(2, num)):
 		n = str(bin(i))[2:]
 		a = len(str(bin(i))[2:])
-		for j in range(a, len(str(bin(num))[2:]) + 1):
+		for j in range(a, len(str(bin(num))[2:])):
 			n = '0' + n
 		result.append(split(n))
 	return result
@@ -91,6 +91,34 @@ def calculate_matrix_line_sum(matrix):
 	return result
 
 
+def matrix_A_decomposition(initial_matrix, m, p):
+	result = []
+	start = 0
+	end = m
+	for i in range(0, p):
+		aux = [i[start:end] for i in initial_matrix]
+		start = start + m
+		end = end + m
+		result.append(aux)
+	return numpy.array(result)
+
+
+def matrix_B_decomposition(initial_matrix, m, p):
+	result = []
+	start = 0
+	end = m
+	for i in range(0, p):
+		aux = initial_matrix[start:end]
+		start = start + m
+		end = end + m
+		result.append(aux)
+	return numpy.array(result)
+
+
+def generate_boolean_matrix(dimension):
+	return numpy.array([[random.choice([True, False]) for i in range(0, dimension)] for j in range(0, dimension)], dtype=bool)
+
+
 def calculate_Ci_matrix(matrix_A, matrix_B):
 	Ci = []
 	all_combination = calculate_matrix_line_sum(matrix_B)
@@ -100,9 +128,28 @@ def calculate_Ci_matrix(matrix_A, matrix_B):
 	return Ci
 
 
-print(calculate_Ci_matrix(generate_matrix(7, 4) ,generate_matrix(4, 7)))
-#print(calculate_matrix_line_sum(generate_matrix(4, 7)))
-#print(generate_all_combination(3))
-#print(generate_all_combination(generate_matrix(4, 8)))
-#print(generate_number(12))
-#print(from_boolean_list_to_integer([True, False, True, True]))
+def problema3(start):
+	number = generate_number(start)
+	
+	matrix_A = generate_boolean_matrix(number)
+	matrix_B = generate_boolean_matrix(number)
+	
+	m = math.floor(math.log2(number))
+	p = math.ceil(number / m)
+
+	list_matrixs_A = matrix_A_decomposition(matrix_A, m, p)
+	list_matrixs_B = matrix_B_decomposition(matrix_B, m, p)
+
+	list_matrixs_Ci = []
+	for i in range(0, len(list_matrixs_A)):
+		list_matrixs_Ci.append(calculate_Ci_matrix(list_matrixs_A[i], list_matrixs_B[i]))
+
+	final_C_matrix = [[False for i in range(0, len(list_matrixs_Ci[0][0]))] for j in range(0, len(list_matrixs_Ci[0]))]
+	for i in range(0, len(list_matrixs_Ci)):
+		final_C_matrix = numpy.logical_or(final_C_matrix, list_matrixs_Ci[i])
+
+	return final_C_matrix
+
+
+print(problema3(15))
+# print(generate_all_combination(2))

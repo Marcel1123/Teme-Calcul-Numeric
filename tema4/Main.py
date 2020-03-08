@@ -1,4 +1,14 @@
 import time
+import math
+
+
+def precizie_masina():
+	precizie = 1
+	while True:
+		if 1 + pow(10, - precizie) == 1:
+			return precizie - 1
+		else:
+			precizie += 1
 
 
 def build_efficient_matrixes(txt):
@@ -32,6 +42,19 @@ def build_vector(txt):
     return return_vector, size_vector
 
 
+def test_matrix(matrix, size, precision):
+    count = 0
+    for i in range(0, size):
+        for j in matrix[i]:
+            if j[1] == i:
+                if abs(j[0]) > precision:
+                    count += 1
+    if count == size:
+        return True
+    return False
+
+
+
 start_time = time.time()
 ##### Initializare matrici si vectori #####
 matrix_A1, size_A1 = build_efficient_matrixes("a_1.txt")
@@ -45,6 +68,12 @@ vector_B3, size_B3 = build_vector("b_3.txt")
 vector_B4, size_B4 = build_vector("b_4.txt")
 vector_B5, size_B5 = build_vector("b_5.txt")
 end_time = time.time() - start_time
+precizie = precizie_masina()
+# print(test_matrix(matrix_A1, size_A1, precizie))
+# print(test_matrix(matrix_A2, size_A2, precizie))
+# print(test_matrix(matrix_A3, size_A3, precizie))
+# print(test_matrix(matrix_A4, size_A4, precizie))
+# print(test_matrix(matrix_A5, size_A5, precizie))
+
 print(end_time)
 
-print(matrix_A1[0])

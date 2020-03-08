@@ -87,4 +87,6 @@ def problema3(start):
 	print(list_of_matric_from_B)
 
 
-print(problema3(4))
+# print(problema3(4))
+print(problema1())
+print(problema2())

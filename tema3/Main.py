@@ -72,3 +72,5 @@ else:
 
 end_time = time.time() - start
 print(end_time)
+
+print(new_matrix_A[0])

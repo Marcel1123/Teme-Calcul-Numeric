@@ -46,3 +46,5 @@ vector_B4, size_B4 = build_vector("b_4.txt")
 vector_B5, size_B5 = build_vector("b_5.txt")
 end_time = time.time() - start_time
 print(end_time)
+
+print(matrix_A1[0])
